@@ -97,12 +97,15 @@ function calculate() {
     let result = operate(operatorValue, num1, num2);
 
     result = Math.round(result * 100) / 100;
-    
+
     firstOperand = result;
     secondOperand = null;
     operatorValue = null;
     displayValue = result;
 
+    updateDisplay();
+  } else {
+    displayValue = "Invalid ";
     updateDisplay();
   }
 }
