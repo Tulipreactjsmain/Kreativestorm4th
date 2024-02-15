@@ -49,7 +49,6 @@ function backspace() {
   updateDisplay();
 }
 
-
 document.addEventListener("keydown", function (event) {
   const key = event.key;
   if (!isNaN(key) || key === ".") {
