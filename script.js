@@ -1,47 +1,64 @@
-function add(a, b) {
-  return a + b;
+let displayValue = "";
+
+function updateDisplay() {
+  document.getElementById("display").value = displayValue;
 }
 
-function subtract(a, b) {
-  return a - b;
+function appendNumber(number) {
+  displayValue += number;
+  updateDisplay();
 }
 
-function multiply(a, b) {
-  return a * b;
+function setOperator(operator) {
+  displayValue += operator;
+  updateDisplay();
 }
 
-function divide(a, b) {
-  if (b === 0) {
-    return "Cannot divide by zero";
+function clearDisplay() {
+  displayValue = "";
+  updateDisplay();
+}
+
+function calculate() {
+  let result = eval(displayValue);
+  if (result === Infinity || isNaN(result)) {
+    result = "Error";
   }
-  return a / b;
+  displayValue = result;
+  updateDisplay();
 }
 
-function operate(operator, num1, num2) {
-  switch (operator) {
-    case "+":
-      return add(num1, num2);
-    case "-":
-      return subtract(num1, num2);
-    case "*":
-      return multiply(num1, num2);
-    case "/":
-      return divide(num1, num2);
-    default:
-      return "Invalid operator";
+function appendDecimal() {
+  if (!displayValue.includes(".")) {
+    displayValue += ".";
+    updateDisplay();
   }
 }
 
-// Test the operate function
-console.log("Addition:", operate("+", 5, 3)); // Output: 8
-console.log("Subtraction:", operate("-", 5, 3)); // Output: 2
-console.log("Multiplication:", operate("*", 5, 3)); // Output: 15
-console.log("Division:", operate("/", 6, 3)); // Output: 2
-console.log("Invalid Operator:", operate("%", 6, 3)); // Output: "Invalid operator"
+function toggleSign() {
+  if (displayValue.startsWith("-")) {
+    displayValue = displayValue.substring(1);
+  } else {
+    displayValue = "-" + displayValue;
+  }
+  updateDisplay();
+}
 
-// function operate(operator, num1, num2) {}
-console.log("Addition:", add(5, 3));
-console.log("Subtraction:", subtract(5, 3));
-console.log("Multiplication:", multiply(5, 3));
-console.log("Division:", divide(6, 3));
-console.log("Division by zero:", divide(6, 0));
+function backspace() {
+  displayValue = displayValue.slice(0, -1);
+  updateDisplay();
+}
+
+
+document.addEventListener("keydown", function (event) {
+  const key = event.key;
+  if (!isNaN(key) || key === ".") {
+    appendNumber(key);
+  } else if (key === "+" || key === "-" || key === "*" || key === "/") {
+    setOperator(key);
+  } else if (key === "Enter") {
+    calculate();
+  } else if (key === "Backspace") {
+    backspace();
+  }
+});
