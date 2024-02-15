@@ -96,6 +96,8 @@ function calculate() {
     const num2 = parseFloat(secondOperand);
     let result = operate(operatorValue, num1, num2);
 
+    result = Math.round(result * 100) / 100;
+    
     firstOperand = result;
     secondOperand = null;
     operatorValue = null;
