@@ -49,6 +49,7 @@ function updateDisplay() {
   document.getElementById("display").value = displayValue;
   console.log("firstoperand:", firstOperand);
   console.log("secondoperand:", secondOperand);
+  console.log("operator", typeof(operatorValue));
 }
 updateDisplay();
 
@@ -75,23 +76,33 @@ function appendNumber(number) {
 }
 
 function setOperator(selectedOperator) {
-  displayValue += selectedOperator;
-  operatorValue = selectedOperator;
-  updateDisplay();
+  if (operatorValue && secondOperand !== null) {
+    calculate();
+  }
+
+  if (firstOperand !== null) {
+    operatorValue = selectedOperator;
+    updateDisplay();
+  }
 }
 
 function calculate() {
-  const num1 = parseFloat(firstOperand);
-  const num2 = parseFloat(secondOperand);
-  let result;
+  if (
+    firstOperand !== null &&
+    secondOperand !== null &&
+    operatorValue !== null
+  ) {
+    const num1 = parseFloat(firstOperand);
+    const num2 = parseFloat(secondOperand);
+    let result = operate(operatorValue, num1, num2);
 
-  result = operate(operatorValue, num1, num2);
+    firstOperand = result;
+    secondOperand = null;
+    operatorValue = null;
+    displayValue = result;
 
-  firstOperand = result;
-  secondOperand = null
-  displayValue = result;
-
-  updateDisplay();
+    updateDisplay();
+  }
 }
 
 function toggleSign() {
