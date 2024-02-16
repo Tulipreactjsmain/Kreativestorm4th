@@ -25,7 +25,7 @@ function multiply(a, b) {
 
 function divide(a, b) {
   if (b === 0) {
-    return "Cannot divide by zero";
+    return "Nice Try";
   }
   return a / b;
 }
@@ -49,30 +49,49 @@ function updateDisplay() {
   document.getElementById("display").value = displayValue;
   console.log("firstoperand:", firstOperand);
   console.log("secondoperand:", secondOperand);
-  console.log("operator", typeof(operatorValue));
 }
 updateDisplay();
 
 function appendNumber(number) {
-  if (operatorValue === null) {
-    if (firstOperand === null) {
-      firstOperand = number;
-      displayValue = firstOperand;
+  if (number === ".") {
+    if (operatorValue === null) {
+      if (!displayValue.toString().includes(".")) {
+        firstOperand =
+          firstOperand === null
+            ? displayValue.toString() + number
+            : firstOperand + number;
+        displayValue = firstOperand;
+        updateDisplay();
+      }
     } else {
-      firstOperand = parseFloat(firstOperand.toString() + number.toString());
-      displayValue = firstOperand;
+      if (!secondOperand?.toString().includes(".")) {
+        secondOperand =
+          secondOperand === null ? "0" + number : secondOperand + number;
+        displayValue = secondOperand;
+        updateDisplay();
+      }
     }
   } else {
-    if (secondOperand === null) {
-      secondOperand = number;
-      displayValue = secondOperand;
+    if (operatorValue === null) {
+      if (firstOperand === null) {
+        firstOperand = number;
+      } else {
+        firstOperand = parseFloat(firstOperand.toString() + number.toString());
+      }
+      displayValue = firstOperand;
     } else {
-      secondOperand = parseFloat(secondOperand.toString() + number.toString());
+      if (secondOperand === null) {
+        secondOperand = number;
+      } else {
+        secondOperand = parseFloat(
+          secondOperand.toString() + number.toString()
+        );
+      }
       displayValue = secondOperand;
     }
-  }
 
-  updateDisplay();
+    updateDisplay();
+  }
 }
 
 function setOperator(selectedOperator) {
@@ -84,9 +103,15 @@ function setOperator(selectedOperator) {
     operatorValue = selectedOperator;
     updateDisplay();
   }
+
+  if (firstOperand === null || displayValue === 0) {
+    firstOperand = displayValue;
+    operatorValue = selectedOperator;
+  }
 }
 
 function calculate() {
+  let result;
   if (
     firstOperand !== null &&
     secondOperand !== null &&
@@ -94,11 +119,15 @@ function calculate() {
   ) {
     const num1 = parseFloat(firstOperand);
     const num2 = parseFloat(secondOperand);
-    let result = operate(operatorValue, num1, num2);
 
-    result = Math.round(result * 100) / 100;
-
-    firstOperand = result;
+    if (operatorValue === "/" && num2 === 0) {
+      result = operate(operatorValue, num1, num2);
+      firstOperand = null;
+    } else {
+      result = operate(operatorValue, num1, num2);
+      result = Math.round(result * 100) / 100;
+      firstOperand = result;
+    }
     secondOperand = null;
     operatorValue = null;
     displayValue = result;
