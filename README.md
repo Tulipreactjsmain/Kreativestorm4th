@@ -15,10 +15,12 @@ To use visit this link: https://tulipreactjsmain.github.io/Kreativestorm4th/
 
 ## Features
 
--Basic Operations: Perform addition, subtraction, multiplication, and division.
--Decimal Support: Input and calculate decimal numbers.
--Clear Function: Reset the calculator with a single button click.
--Responsive Design: The calculator is designed to work seamlessly across different devices and screen sizes.
+
+- Basic Operations: Perform addition, subtraction, multiplication, and division.
+- Decimal Support: Input and calculate decimal numbers.
+- Clear Function: Reset the calculator with a single button click.
+- Responsive Design: The calculator is designed to work seamlessly across different devices and screen sizes.
+
 
 ## Usage
 
