@@ -230,3 +230,24 @@ document.addEventListener("keydown", function (event) {
     backspace();
   }
 });
+
+const buttons = document.querySelectorAll("button");
+
+buttons.forEach((button) => {
+  button.addEventListener("click", () => {
+    if (button.textContent.match(/[0-9.=C←]/)) {
+      button.classList.add("button-clicked");
+      setTimeout(() => {
+        button.classList.remove("button-clicked");
+      }, 100);
+    } else {
+      buttons.forEach((btn) => btn.classList.remove("button-clicked"));
+      button.classList.add("button-clicked");
+    }
+    if (button.textContent === "=") {
+      document.querySelectorAll("[data-operator]").forEach((opButton) => {
+        opButton.classList.remove("button-clicked");
+      });
+    }
+  });
+});

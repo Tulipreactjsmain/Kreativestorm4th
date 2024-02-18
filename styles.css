@@ -98,3 +98,8 @@ button[data-operator] {
 button[data-value] {
   margin: 10px;
 }
+
+.button-clicked {
+  background-color: #90dffc !important;
+}
+
