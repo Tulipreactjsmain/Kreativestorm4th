@@ -71,6 +71,27 @@ function appendNumber(number) {
         updateDisplay();
       }
     }
+  } else if (number === "0") {
+    if (operatorValue === null) {
+      if (firstOperand === null) {
+        firstOperand = "0";
+      } else if (!firstOperand.toString().includes(".")) {
+        firstOperand += "0";
+      } else {
+        firstOperand += number;
+      }
+      displayValue = firstOperand;
+    } else {
+      if (secondOperand === null) {
+        secondOperand = "0";
+      } else if (!secondOperand.toString().includes(".")) {
+        secondOperand += "0";
+      } else {
+        secondOperand += number;
+      }
+      displayValue = secondOperand;
+    }
+    updateDisplay();
   } else {
     if (operatorValue === null) {
       if (firstOperand === null) {
@@ -93,6 +114,7 @@ function appendNumber(number) {
     updateDisplay();
   }
 }
+
 
 function setOperator(selectedOperator) {
   if (operatorValue && secondOperand !== null) {
@@ -132,6 +154,9 @@ function calculate() {
     operatorValue = null;
     displayValue = result;
 
+    updateDisplay();
+  } else {
+    displayValue = "Invalid ";
     updateDisplay();
   }
 }
@@ -204,4 +229,25 @@ document.addEventListener("keydown", function (event) {
   } else if (key === "Backspace") {
     backspace();
   }
+});
+
+const buttons = document.querySelectorAll("button");
+
+buttons.forEach((button) => {
+  button.addEventListener("click", () => {
+    if (button.textContent.match(/[0-9.=C←]/)) {
+      button.classList.add("button-clicked");
+      setTimeout(() => {
+        button.classList.remove("button-clicked");
+      }, 100);
+    } else {
+      buttons.forEach((btn) => btn.classList.remove("button-clicked"));
+      button.classList.add("button-clicked");
+    }
+    if (button.textContent === "=") {
+      document.querySelectorAll("[data-operator]").forEach((opButton) => {
+        opButton.classList.remove("button-clicked");
+      });
+    }
+  });
 });

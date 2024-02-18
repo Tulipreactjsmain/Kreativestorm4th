@@ -17,7 +17,6 @@ body {
   height: 530px;
   margin: 50px auto;
   padding: 30px;
-  border: 4px solid #034d97;
   border: 6px solid #034d97;
   border-radius: 10px;
   background-color: #e8f5ff;
@@ -99,3 +98,8 @@ button[data-operator] {
 button[data-value] {
   margin: 10px;
 }
+
+.button-clicked {
+  background-color: #90dffc !important;
+}
+
