@@ -71,6 +71,27 @@ function appendNumber(number) {
         updateDisplay();
       }
     }
+  } else if (number === "0") {
+    if (operatorValue === null) {
+      if (firstOperand === null) {
+        firstOperand = "0";
+      } else if (!firstOperand.toString().includes(".")) {
+        firstOperand += "0";
+      } else {
+        firstOperand += number;
+      }
+      displayValue = firstOperand;
+    } else {
+      if (secondOperand === null) {
+        secondOperand = "0";
+      } else if (!secondOperand.toString().includes(".")) {
+        secondOperand += "0";
+      } else {
+        secondOperand += number;
+      }
+      displayValue = secondOperand;
+    }
+    updateDisplay();
   } else {
     if (operatorValue === null) {
       if (firstOperand === null) {
@@ -93,6 +114,7 @@ function appendNumber(number) {
     updateDisplay();
   }
 }
+
 
 function setOperator(selectedOperator) {
   if (operatorValue && secondOperand !== null) {
