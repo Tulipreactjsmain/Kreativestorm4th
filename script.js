@@ -10,6 +10,7 @@ let firstOperand = null;
 let secondOperand = null;
 let operatorValue = null;
 let displayValue = 0;
+let result;
 
 function add(a, b) {
   return a + b;
@@ -47,8 +48,6 @@ function operate(operator, num1, num2) {
 
 function updateDisplay() {
   document.getElementById("display").value = displayValue;
-  console.log("firstoperand:", firstOperand);
-  console.log("secondoperand:", secondOperand);
 }
 updateDisplay();
 
@@ -115,7 +114,6 @@ function appendNumber(number) {
   }
 }
 
-
 function setOperator(selectedOperator) {
   if (operatorValue && secondOperand !== null) {
     calculate();
@@ -125,15 +123,13 @@ function setOperator(selectedOperator) {
     operatorValue = selectedOperator;
     updateDisplay();
   }
-
-  if (firstOperand === null || displayValue === 0) {
+  if ((firstOperand === null || displayValue === 0) && result !== "Nice Try") {
     firstOperand = displayValue;
     operatorValue = selectedOperator;
   }
 }
 
 function calculate() {
-  let result;
   if (
     firstOperand !== null &&
     secondOperand !== null &&
@@ -147,16 +143,13 @@ function calculate() {
       firstOperand = null;
     } else {
       result = operate(operatorValue, num1, num2);
-      result = Math.round(result * 100) / 100;
+      result = Math.round(result * 1000000) / 1000000;
       firstOperand = result;
     }
     secondOperand = null;
     operatorValue = null;
     displayValue = result;
 
-    updateDisplay();
-  } else {
-    displayValue = "Invalid ";
     updateDisplay();
   }
 }
@@ -245,6 +238,11 @@ buttons.forEach((button) => {
       button.classList.add("button-clicked");
     }
     if (button.textContent === "=") {
+      document.querySelectorAll("[data-operator]").forEach((opButton) => {
+        opButton.classList.remove("button-clicked");
+      });
+    }
+    if (button.textContent === "C") {
       document.querySelectorAll("[data-operator]").forEach((opButton) => {
         opButton.classList.remove("button-clicked");
       });
